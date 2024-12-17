@@ -101,3 +101,8 @@ body {
         opacity: 1; /* Fully visible at the midpoint */
     }
 }
+
+#rolling-text {
+    white-space: nowrap;
+    transition: transform 1s ease-in-out; /* Smooth transitions */
+}

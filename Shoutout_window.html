@@ -7,19 +7,52 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div id="frame-container">
-        <div id="frame-header">
-            <div id="loading-bar-container">
-                <div id="loading-bar"></div>
+    <div id="outer-frame">
+        <div id="frame-container">
+            <div id="frame-header">
+                <div id="rolling-text-container">
+                    <span id="rolling-text">Loading...</span>
+                </div>
             </div>
-            <h1 id="streamer-name" class="loading">Loading...</h1>
-
-        </div>
-        <div id="video-container">
-            <iframe id="video-frame" src="" frameborder="0"></iframe>
+            <div id="video-container">
+                <iframe id="video-frame" src="" frameborder="0"></iframe>
+            </div>
         </div>
     </div>
-    <script src="script.js"></script>
+    <script>
+        // Streamer Data
+        const streamerName = "Streamer Name"; // Replace with actual streamer name
+        const subscriptionTier = "Tier 3 Sub"; // Replace with tier or empty if not a sub
+
+        // Reference to the rolling text container
+        const rollingText = document.getElementById("rolling-text");
+
+        // Initialize rolling text
+        let textIndex = 0;
+
+        // Decide which text to display based on subscription
+        const texts = subscriptionTier ? [streamerName, subscriptionTier] : [streamerName];
+
+        // Function to update rolling text
+        function updateRollingText() {
+            rollingText.textContent = texts[textIndex];
+            textIndex = (textIndex + 1) % texts.length; // Cycle through texts
+        }
+
+        // Start rolling text updates
+        const delay = texts.length > 1 ? [4000, 2000] : [4000]; // Longer delay for name
+        let intervalIndex = 0;
+
+        function startRollingText() {
+            updateRollingText();
+            setTimeout(() => {
+                intervalIndex = (intervalIndex + 1) % delay.length;
+                startRollingText();
+            }, delay[intervalIndex]);
+        }
+
+        startRollingText(); // Start the text rolling
+    </script>
 </body>
 </html>
 
